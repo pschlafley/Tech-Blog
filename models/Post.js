@@ -15,9 +15,13 @@ Post.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        post_url: {
+        text_area: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
+        },
+        reference_url: {
+            type: DataTypes.STRING,
+            allowNull: true,
             validate: {
                 isURL: true
             }
