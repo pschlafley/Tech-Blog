@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post } = require('../../models');
+const { Post, Comment } = require('../../models');
 
 router.get('/', (req, res) => {
     Post.findAll({
@@ -7,8 +7,17 @@ router.get('/', (req, res) => {
             'id',
             'title',
             'text_area',
+            'reference_url',
             'created_at',
             'user_id'
+        ],
+        include: [
+            {
+                model: Comment,
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            }
         ]
     })
     .then(dbPostData => {res.json(dbPostData)})
@@ -24,12 +33,21 @@ router.get('/:id', (req, res) => {
             'id', 
             'title', 
             'text_area', 
+            'reference_url',
             'created_at',
             'user_id'
         ],
         where: {
             id: req.params.id
-        }
+        },
+        include: [
+            {
+                model: Comment,
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            }
+        ]
     })
     .then(dbPostData => {
         if(!dbPostData) {
@@ -55,6 +73,38 @@ router.post('/', (req, res) => {
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
+    })
+});
+
+router.put('/:id', (req, res) => {
+    Post.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbPostData => {
+        if(!dbPostData[0]){
+            res.status(404).json({ message: 'No Post found with this id' });
+            return;
+        }
+        res.json(dbPostData)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+});
+
+router.delete('/:id', (req, res) => {
+    Post.destroy(
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    )
+    .then(dbPostData => {res.json(dbPostData)})
+    .catch(err => {
+        res.status(500).json(err)
     })
 });
 
