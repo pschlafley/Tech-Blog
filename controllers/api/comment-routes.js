@@ -2,7 +2,12 @@ const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 
 router.get('/', (req, res) => {
-    Comment.findAll({})
+    Comment.findAll({
+        order: [['created_at', 'DESC']],
+        attributes: {
+            exclude: ['updatedAt']
+        }
+    })
     .then(dbCommentData => res.json(dbCommentData))
     .catch(err => {
         console.log(err);
@@ -14,6 +19,9 @@ router.get('/:id', (req, res) => {
     Comment.findOne({
         where: {
             id: req.params.id
+        },
+        attributes: {
+            exclude: ['updatedAt']
         }
     })
     .then(dbCommentData => {
@@ -39,6 +47,35 @@ router.post('/', (req, res) => {
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
+    })
+});
+
+router.put('/:id', (req, res) => {
+    Comment.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbCommentData => {
+        if(!dbCommentData[0]) {
+            res.status(404).json({ message: 'No Comment found at that id'})
+        }
+        res.json(dbCommentData)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+});
+
+router.delete('/:id', (req, res) => {
+    Post.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbCommentData => res.json(dbCommentData))
+    .catch(err => {
+        res.status(500).json(err)
     })
 });
 

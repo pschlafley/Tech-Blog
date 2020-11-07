@@ -1,22 +1,32 @@
 const router = require('express').Router();
-const { Post, Comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 
 router.get('/', (req, res) => {
     Post.findAll({
+        order: [['created_at', 'DESC']],
         attributes: [
             'id',
             'title',
             'text_area',
             'reference_url',
-            'created_at',
-            'user_id'
+            'created_at'
         ],
         include: [
             {
+                model: User,
+                attributes: ['username']
+            },
+            {
                 model: Comment,
                 attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
+                    exclude: ['updatedAt', 'user_id', 'post_id']
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'username']
+                    }
+                ]
             }
         ]
     })
@@ -34,18 +44,27 @@ router.get('/:id', (req, res) => {
             'title', 
             'text_area', 
             'reference_url',
-            'created_at',
-            'user_id'
+            'created_at'
         ],
         where: {
             id: req.params.id
         },
         include: [
             {
+                model: User,
+                attributes: ['username']
+            },
+            {
                 model: Comment,
                 attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
+                    exclude: ['updatedAt', 'user_id', 'post_id']
+                },
+                include: [
+                    {
+                        model: User, 
+                        attributes: ['id','username']
+                    }
+                ]
             }
         ]
     })
