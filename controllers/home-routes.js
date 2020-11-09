@@ -54,6 +54,10 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+router.get('/sign-up', (req, res) => {
+  res.render('sign-up')
+});
+
 
 router.get('/post/:id', (req, res) => {
     Post.findOne({
@@ -74,10 +78,10 @@ router.get('/post/:id', (req, res) => {
         },
         {
           model: Comment,
-          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+          attributes: ['id', 'text_area', 'post_id', 'user_id', 'created_at'],
           include: {
             model: User,
-            attributes: ['id', 'username']
+            attributes: ['username']
           }
         }
       ]

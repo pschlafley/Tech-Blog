@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', (req, res) => {
     Post.findAll({
@@ -81,22 +82,26 @@ router.get('/:id', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
-    Post.create({
-        title: req.body.title,
-        text_area: req.body.text_area,
-        reference_url: req.body.reference_url,
-        user_id: req.body.user_id
-    })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    })
+router.post('/', withAuth, (req, res) => {
+    if(req.session) {
+        Post.create({
+            title: req.body.title,
+            text_area: req.body.text_area,
+            reference_url: req.body.reference_url,
+            user_id: req.session.user_id
+        })
+        .then(dbPostData => res.json(dbPostData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+    }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     Post.update(req.body, {
+        title: req.body.title,
+        text_area: req.body.text_area,
         where: {
             id: req.params.id
         }
@@ -113,7 +118,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Post.destroy(
         {
             where: {

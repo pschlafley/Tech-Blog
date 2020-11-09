@@ -2,6 +2,7 @@ const express = require('express');
 const sequelize = require('./config/connection');
 const routes = require('./controllers');
 const path = require('path');
+require('dotenv').config();
 
 const helpers = require('./utils/helpers');
 
@@ -11,7 +12,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 
 const sess = {
-    secret: "Super secret secret",
+    secret: process.env.DB_SECRET,
     cookie: {},
     resave: false,
     saveUninitialized: true, 

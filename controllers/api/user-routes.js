@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
 router.get('/', (req, res) => {
@@ -58,7 +59,15 @@ router.post('/', (req, res) => {
             password: req.body.password
         }
     )
-    .then(createdUser => res.json(createdUser))
+    .then(createdUser => {
+        req.session.save(() => {
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+            
+            res.json(createdUser);
+        });
+    })
     .catch(err => {
         res.status(500).json(err)
     })
