@@ -205,6 +205,14 @@
   .edit-btn {
     color: black;
   }
+
+  .dashboard-btn-wrapper {
+    padding-bottom: 15px;
+  }
+
+  .dashboard-btn {
+    color: black;
+  }
   
   footer {
     display: flex;
