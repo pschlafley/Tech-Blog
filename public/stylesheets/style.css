@@ -12,7 +12,7 @@
   
   a {
     text-decoration: none;
-    color: #225ca3;
+    color: burlywood;
     font-weight: bold;
     transition: color .1s;
   }
@@ -22,12 +22,12 @@
   }
   
   button {
-    background-color: #225ca3;
+    background-color: #2290a3;
     border: 0;
     padding: 1%;
     color: white;
     font-weight: bold;
-    transition: background-color .1s;
+    transition: background-color .5s;
     cursor: pointer;
     border-radius: 5px;
   }
@@ -44,7 +44,7 @@
   textarea, input {
     padding: .5%;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(7, 7, 7);
   }
   
   textarea:focus, input:focus {
@@ -68,22 +68,28 @@
   .wrapper {
     width: 100%;
     min-height: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    background-color: burlywood;
   }
   
   header {
-    border-bottom: 1px solid #ccc;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 1%;
+    background-color: black;
+    padding: 20px;
   }
   
   header h1 {
-    font-size: 1em;
+    font-size: 2em;
+    padding: 8px;
+    border-radius: 7px;
   }
   
   main {
@@ -97,7 +103,7 @@
     padding: 0;
     cursor: pointer;
     text-decoration: none;
-    color: #225ca3;
+    color: burlywood;
     font-size: 100%;
     font-weight: bold;
     transition: color .1s;
@@ -120,26 +126,20 @@
   .post {
     margin-bottom: 2%;
     line-height: 150%;
-  }
-  
-  .post .title span {
+    background-color: black;
+    padding: 10px;
     font-style: italic;
     font-size: 90%;
-    color: #7d7d7d;
+    color: white;
+  }
+
+  .post .right {
+    text-align: right;
   }
   
   .edit-link {
     display: block;
     margin: -1.5% 0 2% 0;
-  }
-  
-  .upvote-btn {
-    background-color: #197d0f;
-    transition: background-color .1s;
-  }
-  
-  .upvote-btn:hover {
-    background-color: #1f9c13;
   }
   
   .comment-form {
@@ -149,13 +149,46 @@
   .comment {
     padding: 1%;
     margin-bottom: 1%;
+    border-radius: 10px;
   }
   
   .comment:nth-child(odd) {
     background-color: #fff5eb;
   }
+  .comment:nth-child(even) {
+    background-color: #e9820d;
+  }
   
-  .comment .meta {
+  .meta{
+    color: black;
+    background-color: burlywood;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    padding: 15px;
+    font-weight: lighter;
+    margin: -10px ;
+    margin-top: 10px;
+  }
+
+  .meta a {
+    color: black;
+  }
+
+  .meta a:hover {
+    color: #3486eb;
+  }
+
+  .beta {
+    color: black;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .comment .beta {
+    padding: 0px 15px;
     font-size: 90%;
     margin-bottom: .5%;
     opacity: .6;
@@ -168,11 +201,15 @@
   .edit-post-form {
     margin-bottom: 5%;
   }
+
+  .edit-btn {
+    color: black;
+  }
   
   footer {
-    border-top: 1px solid #ccc;
     display: flex;
     justify-content: center;
     padding: 1%;
     font-size: 110%;
+    background-color: burlywood;
   }

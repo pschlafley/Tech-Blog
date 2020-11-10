@@ -1,3 +1,12 @@
+{{!-- {{#if loggedIn}}
+{{#each posts}}
+<div>
+  <h1>Welcome</h1>
+  <p>{{user.username}}</p>
+</div>
+{{/each}}
+{{/if}} --}}
+
 <section>
   <h2>Create New Post</h2>
 
@@ -18,14 +27,14 @@
 {{#if posts.length}}
 <section>
   <h2>Your Posts</h2>
-  <ol>
+  <div>
     {{#each posts as |post|}}
-    <li>
+    <div>
       {{> post-info post}}
-      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
-    </li>
+      <a class="edit-btn" href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+    </div>
     {{/each}}
-  </ol>
+  </div>
 </section>
 {{/if}}
 
